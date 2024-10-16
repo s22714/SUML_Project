@@ -1,16 +1,30 @@
 import pandas as pd
-#import autogluon
-import pycaret
+import autogluon
+from autogluon.tabular import TabularDataset, TabularPredictor
 
 pd.set_option('display.max_columns', 100)
 
 df = pd.read_csv('cars.csv', delimiter=';')
 df.drop(columns='Unnamed: 17', inplace=True)
 
+data = TabularDataset(df)
 
-print(df.head())
-print(df.shape)
-print(df.describe())
-print(df.columns)
-print(df.dtypes)
-print(df.isnull().sum())
+train_size = int(38530 * 0.8)
+seed = 1080
+train_set = data.sample(train_size, random_state=seed)
+test_set = data.drop(train_set.index)
+
+print(test_set)
+
+train_data = TabularDataset(train_set)
+predictor = TabularPredictor(label='price_usd', eval_metric="roc_auc").fit(train_data, presets="medium_quality")
+
+test_data = TabularDataset(test_set)
+
+predictions = predictor.predict(test_data)
+print(predictions)
+
+leaderboard = predictor.leaderboard()
+print(leaderboard)
+
+print(predictor.evaluate(train_data))
