@@ -17,7 +17,7 @@ test_set = data.drop(train_set.index)
 print(test_set)
 
 train_data = TabularDataset(train_set)
-predictor = TabularPredictor(label='price_usd', eval_metric="roc_auc").fit(train_data, presets="medium_quality")
+predictor = TabularPredictor(label='price_usd', eval_metric="root_mean_squared_error").fit(train_data, presets="medium_quality")
 
 test_data = TabularDataset(test_set)
 
