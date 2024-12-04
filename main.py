@@ -1,7 +1,6 @@
 import pandas as pd
-import autogluon
 from autogluon.tabular import TabularDataset, TabularPredictor
-from data_cleaner import data_cleaner, data_cleaning_and_encoding
+from data_cleaner import data_cleaning_and_encoding
 
 
 def model_creation(path, delimiter=','):

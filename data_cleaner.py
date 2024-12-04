@@ -35,8 +35,8 @@ def label_encoding(df):
     df = pd.concat([scaled_num_df.reset_index(drop=True), encoded_cat_df.reset_index(drop=True)], axis=1)
     return df
 
-def data_cleaning_and_encoding(path, delimeter=','):
-    df = data_cleaner(path, delimiter=delimeter)
+def data_cleaning_and_encoding(path, delimiter=','):
+    df = data_cleaner(path, delimiter=delimiter)
     df.to_csv('cars_cleaned.csv', index=False)
     df = label_encoding(df)
     return df
