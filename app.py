@@ -1,6 +1,20 @@
+import kagglehub
 import streamlit as st
 import pandas as pd
 from autogluon.tabular import TabularPredictor
+from data_cleaner import data_cleaning_and_encoding
+from main import model_creation
+
+try:
+    open('cars_cleaned.csv', 'r')
+except Exception:
+    path = kagglehub.dataset_download("lepchenkov/usedcarscatalog", force_download=True)
+    data_cleaning_and_encoding(path + "/cars.csv")
+
+try:
+    TabularPredictor.load("bestModel")
+except Exception:
+    model_creation("cars_cleaned.csv")
 
 base_df = pd.read_csv('cars_cleaned.csv')
 

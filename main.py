@@ -3,9 +3,9 @@ from autogluon.tabular import TabularDataset, TabularPredictor
 from data_cleaner import data_cleaning_and_encoding
 
 
-def model_creation(path, delimiter=','):
+def model_creation(path):
     pd.set_option('display.max_columns', 100)
-    df = data_cleaning_and_encoding(path, delimiter)
+    df = pd.read_csv(path)
     data = TabularDataset(df)
 
     train_size = int(38530 * 0.8)
@@ -16,7 +16,9 @@ def model_creation(path, delimiter=','):
     print(test_set)
 
     train_data = TabularDataset(train_set)
-    predictor = TabularPredictor(label='price_usd', eval_metric="root_mean_squared_error", path='bestModel').fit(train_data, presets="medium_quality", excluded_model_types=['NN_TORCH', 'FASTAI'], fit_weighted_ensemble=False)
+    predictor = TabularPredictor(label='price_usd', eval_metric="root_mean_squared_error", path='bestModel')\
+        .fit(train_data, presets="medium_quality", excluded_model_types=['NN_TORCH', 'FASTAI'],
+             fit_weighted_ensemble=False)
 
     test_data = TabularDataset(test_set)
 
