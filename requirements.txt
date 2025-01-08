@@ -1,0 +1,5 @@
+numpy
+pandas
+autogluon.tabular[all]
+kaggle
+streamlit
