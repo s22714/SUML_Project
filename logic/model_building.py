@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 
 def load_dataset():
-    return pd.read_csv('../datasets/cars_cleaned.csv')
+    return pd.read_csv('datasets/cars_cleaned.csv')
 
 
 def model_creation_and_training(df):
