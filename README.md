@@ -1,15 +1,25 @@
 # SUML_Project
+
 ## Spis treści
 <ol>
   
 ## <li>Opis i cel aplikacji</li>
-<p>Aplikacja ma na celu wspomóc zarówno nowych kierowców, jak i starych weteranów w zakupie/sprzedaży samochodów. Dzięki aplikacji można sprawdzić średnią cenę samochodu przy ustawieniu odpowiednich parametrów.</p>
+
+<p>Aplikacja ma wesprzeć sprzedawców jak i kupujących w sprawdzeniu średniej ceny auta przy określonych parametrach. Pozowoli to na ochrone przed zbyt tanimi/drogimi ofertami.</p>
 
 ## <li>Technologie i Narzędzia</li>
 
-## <li>Architektura Aplikacji</li>
+Do utworzenia aplikacji został użyty Python z następującymi bibliotekami:
+<ul>
+  <li>Streamlit - jako szybki interfejs aplikacji. Jego prostota umożliwia szybkie wprowadzenia zmian.</li>
+  <li>Autogluon - jeden z paru modeli automatycznego szkolenia ML.</li>
+  <li>Pandas - do analizy danych.</li>
+  <li>Scikit-learn - do przetwarzania, oczyszczania i normalizacji danych</li>
+  <li>Kagglehub - do szybkiego dostępu do datasetu bez potrzeby trzymania go w plikach</li>
+</ul>
+
 ## <li>Dane Wejściowe</li>
-<p>Do aplikacji zostały użyte poniższy dataset <a href=https://www.kaggle.com/datasets/slavapasedko/belarus-used-cars-prices>Belarus Used Cars Prices</a></p>
+<p>Do aplikacji zostały użyte poniższy dataset <a href=https://www.kaggle.com/datasets/lepchenkov/usedcarscatalog>Belarus Used Cars Prices</a></p>
 </a>
 <p>Dataset posiada:
 <ul>
@@ -44,7 +54,14 @@
 
 
 ## <li>Modelowanie i Proces Trenowania Modelu</li>
-## <li>Opis Wyników</li>
+
+<p>Do przeprowadzenia automatycznej analizy modeli, została zastosowana biblioteka Autogluon. Pozwala ona na wybranie najlepszych modeli wraz z odpowiednio ustawionymi parametrami. Dodatkowymi plusami tego narzędzia AutoML są:
+  <ul>
+    <li>Eksport najelpszych rozwiązań do formatu .pkl (pickle).</li>
+    <li>Możliwość wykluczania konkretnych modeli (Przy założeniu, że są one nam niepotrzebne.).</li>
+    <li>Automatyczne przypisywanie hiperparametrów.</li>
+  </ul></p>
+
 ## <li>Instrukcja Obsługi Aplikacji</li>
 ## <li>Podsumowanie</li>
 
