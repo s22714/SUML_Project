@@ -2,6 +2,7 @@ numpy
 pandas
 autogluon.tabular[all]
 kaggle
+kagglehub
 streamlit
 scikit-learn
 google-cloud-aiplatform
