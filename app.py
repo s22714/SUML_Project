@@ -18,16 +18,16 @@ except Exception:
 
 base_df = pd.read_csv('datasets/cars_cleaned.csv')
 
-st.set_page_config(page_title='Predykcja ceny samochodu', layout='wide')
+st.set_page_config(page_title='Predykcja ceny samochodu')
 
 st.title('Predykcja ceny samochodu')
 st.markdown('Wprowadź parametry swojego pojazdu, aby oszacować jego wartość rynkową.')
 manufacturer_name = st.selectbox('Marka samochodu', base_df['manufacturer_name'].unique())
-model_name = st.text_input('Model')
+model_name = st.text_input('Model').title()
 transmission = st.selectbox('Skrzynia biegów', base_df['transmission'].unique())
 color = st.selectbox('Kolor', base_df['color'].unique())
 odometer_value = st.number_input('Przebieg (w km)', min_value=0.0, step=1000.0)
-year_produced = st.slider('Rok produkcji', 1940, 2024, 2010)
+year_produced = st.slider('Rok produkcji', 1980, 2024, 2010)
 engine_fuel = st.selectbox('Rodzaj paliwa', base_df['engine_fuel'].unique())
 engine_has_gas = st.checkbox('Instalacja LPG', value=False)
 engine_type = st.selectbox('Typ silnika', base_df['engine_type'].unique())
@@ -37,7 +37,9 @@ has_warranty = st.checkbox('Posiada gwarancję', value=False)
 state = st.selectbox('Stan pojazdu', base_df['state'].unique())
 drive = st.selectbox('Napęd', base_df['drive'].unique())
 first_user = st.checkbox('Pierwszy właściciel', value=True)
+currency = st.selectbox('Waluta', ('PLN','USD'))
 button = st.button('Oblicz cenę')
+
 if button:
     if model_name in base_df['model_name'].unique():
         predictor = TabularPredictor.load('models/bestModel')
@@ -60,6 +62,10 @@ if button:
             'duration_listed': [0]
         })
         prediction = predictor.predict(input_data)
-        st.success(f'Przewidywana cena samochodu: {prediction[0]:,.2f} USD')
+        if currency == "PLN":
+            prediction*=4
+            st.success(f'Przewidywana cena samochodu: {prediction[0]:,.2f} PLN')
+        else :
+            st.success(f'Przewidywana cena samochodu: {prediction[0]:,.2f} USD')
     else:
         st.error('Podanego modelu nie ma bazie danych')

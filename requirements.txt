@@ -1,7 +1,6 @@
 numpy~=1.26.4
 pandas~=2.2.3
 autogluon.tabular[all]
-kaggle
 streamlit~=1.41.1
 scikit-learn~=1.5.2
 kagglehub~=0.3.6
