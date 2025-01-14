@@ -2,21 +2,21 @@ import kagglehub
 import streamlit as st
 import pandas as pd
 from autogluon.tabular import TabularPredictor
-from data_cleaner import data_cleaning_and_encoding
-from main import model_creation
+from logic.data_cleaner import data_cleaning_and_encoding
+from logic.model_building import model_creation
 
 try:
-    open('cars_cleaned.csv', 'r')
+    open('datasets/cars_cleaned.csv', 'r')
 except Exception:
     path = kagglehub.dataset_download("lepchenkov/usedcarscatalog", force_download=True)
     data_cleaning_and_encoding(path + "/cars.csv")
 
 try:
-    TabularPredictor.load("bestModel")
+    TabularPredictor.load("models/bestModel")
 except Exception:
-    model_creation("cars_cleaned.csv")
+    model_creation()
 
-base_df = pd.read_csv('cars_cleaned.csv')
+base_df = pd.read_csv('datasets/cars_cleaned.csv')
 
 st.set_page_config(page_title='Predykcja ceny samochodu', layout='wide')
 
@@ -40,7 +40,7 @@ first_user = st.checkbox('Pierwszy właściciel', value=True)
 button = st.button('Oblicz cenę')
 if button:
     if model_name in base_df['model_name'].unique():
-        predictor = TabularPredictor.load('bestModel')
+        predictor = TabularPredictor.load('models/bestModel')
         input_data = pd.DataFrame({
             'manufacturer_name': [manufacturer_name],
             'model_name': [model_name],

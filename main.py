@@ -1,6 +1,6 @@
 import pandas as pd
 from autogluon.tabular import TabularDataset, TabularPredictor
-from data_cleaner import data_cleaning_and_encoding
+from logic.data_cleaner import data_cleaning_and_encoding
 
 
 def model_creation(path):
