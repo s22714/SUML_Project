@@ -22,22 +22,44 @@ st.set_page_config(page_title='Predykcja ceny samochodu')
 
 st.title('Predykcja ceny samochodu')
 st.markdown('Wprowadź parametry swojego pojazdu, aby oszacować jego wartość rynkową.')
-manufacturer_name = st.selectbox('Marka samochodu', base_df['manufacturer_name'].unique())
-model_name = st.text_input('Model').title()
-transmission = st.selectbox('Skrzynia biegów', base_df['transmission'].unique())
+manufacturer_name = st.selectbox('Marka samochodu', sorted(base_df['manufacturer_name'].unique()))
+
+model_name_for_selected_manufacturer = sorted(base_df[base_df['manufacturer_name'] == manufacturer_name]['model_name'].unique())
+model_name = st.selectbox('Model', model_name_for_selected_manufacturer)
+
+transmission_for_selected_model = base_df[base_df['model_name'] == model_name]['transmission'].unique()
+transmission = st.selectbox('Skrzynia biegów', transmission_for_selected_model)
+
 color = st.selectbox('Kolor', base_df['color'].unique())
+
 odometer_value = st.number_input('Przebieg (w km)', min_value=0.0, step=1000.0)
+
 year_produced = st.slider('Rok produkcji', 1980, 2024, 2010)
-engine_fuel = st.selectbox('Rodzaj paliwa', base_df['engine_fuel'].unique())
+
+engine_fuel_for_selected_model = base_df[base_df['model_name'] == model_name]['engine_fuel'].unique()
+engine_fuel = st.selectbox('Rodzaj paliwa', engine_fuel_for_selected_model)
+
 engine_has_gas = st.checkbox('Instalacja LPG', value=False)
-engine_type = st.selectbox('Typ silnika', base_df['engine_type'].unique())
+
+engine_type_for_selected_model = base_df[base_df['engine_fuel'] == engine_fuel]['engine_type'].unique()
+engine_type = st.selectbox('Typ silnika', engine_type_for_selected_model)
+
 engine_capacity = st.number_input('Pojemność silnika w litrach', min_value=0.2, max_value=8.0, step=0.1)
-body_type = st.selectbox('Typ nadwozia', base_df['body_type'].unique())
+
+body_type_from_model = base_df[base_df['model_name'] == model_name]['body_type'].unique()
+body_type = st.selectbox('Typ nadwozia', body_type_from_model)
+
 has_warranty = st.checkbox('Posiada gwarancję', value=False)
+
 state = st.selectbox('Stan pojazdu', base_df['state'].unique())
+
+drive_from_model = base_df[base_df['model_name'] == model_name]['drive'].unique()
 drive = st.selectbox('Napęd', base_df['drive'].unique())
+
 first_user = st.checkbox('Pierwszy właściciel', value=True)
-currency = st.selectbox('Waluta', ('PLN','USD'))
+
+currency = st.selectbox('Waluta', ('PLN', 'USD'))
+
 button = st.button('Oblicz cenę')
 
 if button:
@@ -63,9 +85,17 @@ if button:
         })
         prediction = predictor.predict(input_data)
         if currency == "PLN":
-            prediction*=4
-            st.success(f'Przewidywana cena samochodu: {prediction[0]:,.2f} PLN')
-        else :
-            st.success(f'Przewidywana cena samochodu: {prediction[0]:,.2f} USD')
+            prediction *= 4
+            if prediction[0] <= 0:
+                st.error(
+                    f'Samochód nie nadaje się do sprzedaży. Jego przewidywana cena jest mniejsza od 0. {prediction[0]:,.2f} PLN')
+            else:
+                st.success(f'Przewidywana cena samochodu: {prediction[0]:,.2f} PLN')
+        else:
+            if prediction[0] <= 0:
+                st.error(
+                    f'Samochód nie nadaje się do sprzedaży. Jego przewidywana cena jest mniejsza od 0. {prediction[0]:,.2f} USD')
+            else:
+                st.success(f'Przewidywana cena samochodu: {prediction[0]:,.2f} USD')
     else:
         st.error('Podanego modelu nie ma bazie danych')
