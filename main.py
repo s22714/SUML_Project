@@ -16,8 +16,7 @@ def model_creation(path):
     print(test_set)
 
     train_data = TabularDataset(train_set)
-    predictor = TabularPredictor(label='price_usd', eval_metric="root_mean_squared_error", path='bestModel')\
-        .fit(train_data, presets="medium_quality", excluded_model_types=['NN_TORCH', 'FASTAI'],
+    predictor = TabularPredictor(label='price_usd', eval_metric="root_mean_squared_error", path='bestModel').fit(train_data, presets="medium_quality", excluded_model_types=['NN_TORCH', 'FASTAI'],
              fit_weighted_ensemble=False)
 
     test_data = TabularDataset(test_set)
