@@ -3,3 +3,4 @@ pandas
 autogluon.tabular[all]
 kaggle
 streamlit
+scikit-learn
