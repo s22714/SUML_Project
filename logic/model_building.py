@@ -15,7 +15,7 @@ def model_creation_and_training(df):
     train_data = TabularDataset(train)
 
     predictor = TabularPredictor(label='price_usd', eval_metric="root_mean_squared_error", path='../models/bestModel').fit(
-        train_data, presets="medium_quality", excluded_model_types=['NN_TORCH', 'FASTAI'],
+        train_data, presets="medium_quality", excluded_model_types=['NN_TORCH', 'FASTAI', 'CAT'],
         fit_weighted_ensemble=False)
 
     test_data = TabularDataset(test)
@@ -25,6 +25,8 @@ def model_creation_and_training(df):
     print(predctions)
 
     print(predictor.leaderboard())
+
+    predictor.delete_models(models_to_keep=predictor.model_best, dry_run=False)
 
 
 def model_creation():

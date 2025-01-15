@@ -44,7 +44,7 @@ engine_has_gas = st.checkbox('Instalacja LPG', value=False)
 engine_type_for_selected_model = base_df[base_df['engine_fuel'] == engine_fuel]['engine_type'].unique()
 engine_type = st.selectbox('Typ silnika', engine_type_for_selected_model)
 
-engine_capacity = st.number_input('Pojemność silnika w litrach', min_value=0.2, max_value=8.0, step=0.1)
+engine_capacity = st.number_input('Pojemność silnika w litrach', min_value=0.2, max_value=8.0, step=0.1, value=1.0)
 
 body_type_from_model = base_df[base_df['model_name'] == model_name]['body_type'].unique()
 body_type = st.selectbox('Typ nadwozia', body_type_from_model)
