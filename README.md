@@ -1,17 +1,24 @@
 # SUML_Project
 
 ## Spis treści
-1. [Opis i cel aplikacji](#opis-i-cel-aplikacji)
-2. [Technologie i narzędzia](#technologie-i-narzędzia)
-3. [Dane wejściowe](#dane-wejściowe)
-4. [Czyszczenie danych](#czyszczenie-danych)
-5. [Modelowanie i proces trenowania modelu](#modelowanie-i-proces-trenowania-modelu)
-6. [Instrukcja obsługi aplikacji](#instrukcja-obsługi-aplikacji)
-7. [Podsumowanie](#podsumowanie)
+1. [Opis aplikacji](#opis-aplikacji)
+2. [Cele aplikacji](#cele-aplikacji)
+3. [Technologie i narzędzia](#technologie-i-narzędzia)
+4. [Dane wejściowe](#dane-wejściowe)
+5. [Czyszczenie danych](#czyszczenie-danych)
+6. [Modelowanie i proces trenowania modelu](#modelowanie-i-proces-trenowania-modelu)
+7. [Instrukcja obsługi aplikacji](#instrukcja-obsługi-aplikacji)
+8. [Podsumowanie](#podsumowanie)
   
-## Opis i cel aplikacji
+## Opis aplikacji
 
-<p>Aplikacja ma wesprzeć sprzedawców jak i kupujących w sprawdzeniu średniej ceny auta przy określonych parametrach. Pozowoli to na ochrone przed zbyt tanimi/drogimi ofertami.</p>
+Aplikacja Cars Pricing to narzędzie, które ma wesprzeć proces kupna/sprzedaży samochodów, poprzez określenie średniej ceny auta dla konkretnych parametrów m. in. tj. marka, model, rok produkcji. Umożliwia to zauważenie niepokojąco tanich ofert. Aplikacja jest intuicyjna dla użytkownika, a korzystanie z niej nie powinno sprawić żadnej trudności.
+
+## Cele aplikacji
+- Wsparcie kupujących oraz sprzedających przy określeniu właściwej ceny pojazdu.
+- Ostrzeganie przed podejrzanymi ofertami​.
+- Analiza rozwoju zależności na rynku samochodowego.
+- Określenie potencjalnej średniej ceny samochodu.
 
 ## Technologie i Narzędzia
 
@@ -80,7 +87,7 @@ Przed trenowaniem modelu przeprowadzono czyszczenie danych:
    - Kolumny numeryczne: standaryzowane na rozkład o średniej 0 i odchyleniu standardowym 1.
    - Kolumny kategoryczne: zakodowane przy użyciu OneHotEncoder.
 
-## <li>Modelowanie i Proces Trenowania Modelu</li>
+## Modelowanie i Proces Trenowania Modelu
 
 Do automatycznej analizy modeli zastosowano bibliotekę **Autogluon**, która umożliwia:
 
@@ -98,7 +105,7 @@ Do automatycznej analizy modeli zastosowano bibliotekę **Autogluon**, która um
 - Przetwarzanie równoległe (wydajność na dużych zbiorach danych).
 - Wsparcie dla wartości kategorycznych i liczbowych.
   
-### Instrukcja Obsługi Aplikacji
+## Instrukcja Obsługi Aplikacji
 1. Wybierz interesującą markę samochodu z listy (np. Nissan).
 2. Wybierz model auta.
 3. Wybierz rodzaj skrzyni biegów i kolor.
@@ -116,7 +123,7 @@ Do automatycznej analizy modeli zastosowano bibliotekę **Autogluon**, która um
 - Aplikacja poda oszacowaną cenę samochodu.
 - Jeśli przewidywana cena < 0, wyświetli komunikat, że auto nie nadaje się do sprzedaży.
 
-  ### Uruchamianie lokalne:
+### Uruchamianie lokalne:
 Aby uruchomić aplikację lokalnie:
 1. Skopiuj kod źródłowy aplikacji.
 2. Zainstaluj wymagane biblioteki, wykonując poniższe polecenie w terminalu:
@@ -130,7 +137,11 @@ Aby uruchomić aplikację lokalnie:
    ```bash
    streamlit run app.py
    ```
-
+4. Aplikacja powinna wystartować na localhoście:
+   ```url
+   http://localhost:8501
+   ```
+   
 ## Podsumowanie
 Aplikacja ma duży potencjał zastosowania w realnym świecie. Plany na przyszłość obejmują:
 
