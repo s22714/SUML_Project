@@ -30,7 +30,6 @@ Do utworzenia aplikacji został użyty Python z następującymi bibliotekami:
 - **Scikit-learn** - do czyszczenia, przetwarzania i standaryzacji danych.
 - **Kagglehub** - szybki dostęp do datasetów bez potrzeby przechowywania ich lokalnie.
 
-
 ## Dane Wejściowe
 Aplikacja korzysta z datasetu: [Belarus Used Cars Prices](https://www.kaggle.com/datasets/lepchenkov/usedcarscatalog).
 
@@ -106,6 +105,10 @@ Do automatycznej analizy modeli zastosowano bibliotekę **Autogluon**, która um
 - Wsparcie dla wartości kategorycznych i liczbowych.
   
 ## Instrukcja Obsługi Aplikacji
+
+Aplikacje można odpalić poprzez ten <a href='https://sumel-car-zoomer-v2-544564685305.europe-central2.run.app/'>link</a>
+
+### Jak testować aplikację?
 1. Wybierz interesującą markę samochodu z listy (np. Nissan).
 2. Wybierz model auta.
 3. Wybierz rodzaj skrzyni biegów i kolor.
