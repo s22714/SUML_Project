@@ -1,32 +1,42 @@
 # SUML_Project
 
 ## Spis treści
-<ol>
+1. [Opis i cel aplikacji](#opis-i-cel-aplikacji)
+2. [Technologie i narzędzia](#technologie-i-narzędzia)
+3. [Dane wejściowe](#dane-wejściowe)
+4. [Czyszczenie danych](#czyszczenie-danych)
+5. [Modelowanie i proces trenowania modelu](#modelowanie-i-proces-trenowania-modelu)
+6. [Instrukcja obsługi aplikacji](#instrukcja-obsługi-aplikacji)
+7. [Podsumowanie](#podsumowanie)
   
-## <li>Opis i cel aplikacji</li>
+## Opis i cel aplikacji
 
 <p>Aplikacja ma wesprzeć sprzedawców jak i kupujących w sprawdzeniu średniej ceny auta przy określonych parametrach. Pozowoli to na ochrone przed zbyt tanimi/drogimi ofertami.</p>
 
-## <li>Technologie i Narzędzia</li>
+## Technologie i Narzędzia
 
 Do utworzenia aplikacji został użyty Python z następującymi bibliotekami:
-<ul>
-  <li>Streamlit - jako szybki interfejs aplikacji. Jego prostota umożliwia szybkie wprowadzenia zmian.</li>
-  <li>Autogluon - jeden z paru modeli automatycznego szkolenia ML.</li>
-  <li>Pandas - do analizy danych.</li>
-  <li>Scikit-learn - do przetwarzania, oczyszczania i normalizacji danych</li>
-  <li>Kagglehub - do szybkiego dostępu do datasetu bez potrzeby trzymania go w plikach</li>
-</ul>
 
-## <li>Dane Wejściowe</li>
-<p>Do aplikacji zostały użyte poniższy dataset <a href=https://www.kaggle.com/datasets/lepchenkov/usedcarscatalog>Belarus Used Cars Prices</a></p>
-</a>
-<p>Dataset posiada:
-<ul>
-  <li>około 38.5k rekordów oraz,</li>
-  <li>30 kolumn.</li>
-</ul></p>
-<p>Poniżej znajduje się opis zawartych kolumn:</p>
+- **Streamlit** - szybki interfejs aplikacji umożliwiający łatwe wprowadzenie zmian.
+- **Autogluon** - narzędzie AutoML do automatycznego szkolenia i wyboru najlepszego modelu uczenia maszynowego.
+- **Pandas** - do analizy i przetwarzania danych.
+- **Scikit-learn** - do czyszczenia, przetwarzania i standaryzacji danych.
+- **Kagglehub** - szybki dostęp do datasetów bez potrzeby przechowywania ich lokalnie.
+
+
+## Dane Wejściowe
+Aplikacja korzysta z datasetu: [Belarus Used Cars Prices](https://www.kaggle.com/datasets/lepchenkov/usedcarscatalog).
+
+**Charakterystyka datasetu:**
+- Liczba rekordów: około 38,5 tys.
+- Liczba kolumn: 30.
+
+**Powody wyboru datasetu:**
+- Duża liczba rekordów w porównaniu z innymi datasetami (~10k w większości przypadków).
+- Zawiera istotne kolumny, np. typ auta czy rodzaj napędu, pomijane w innych datasetach.
+- Niska liczba braków danych (zazwyczaj mniej niż 10%).
+
+**Opis kluczowych kolumn:**
 
 | Nazwa kolumny | Opis |
 |:-------------------|:------------------------------------------------|
@@ -52,17 +62,83 @@ Do utworzenia aplikacji został użyty Python z następującymi bibliotekami:
 | feature_0 - feature_9 | Dodatkowe wyposażenie auta |
 | duration_listed | Ile dni samochód był wystawiony na aukcji |
 
+## Czyszczenie danych
+Przed trenowaniem modelu przeprowadzono czyszczenie danych:
+
+1. **Usunięto następujące kolumny:**
+   - `drivetrain` (zmieniona nazwa na `drive`).
+   - `is_exchangeable` (nie wpływa na cenę pojazdu).
+   - `location_region` (lokacja nie jest kluczowa dla predykcji ceny).
+   - `feature_0` - `feature_9` (brak szczegółowych informacji).
+
+2. **Przetwarzanie braków danych:**
+   - Usunięto rekordy z dużą liczbą braków.
+   - Wartości liczbowe uzupełniono średnią.
+   - Wartości kategoryczne uzupełniono najczęściej występującymi wartościami.
+
+3. **Standaryzacja danych:**
+   - Kolumny numeryczne: standaryzowane na rozkład o średniej 0 i odchyleniu standardowym 1.
+   - Kolumny kategoryczne: zakodowane przy użyciu OneHotEncoder.
 
 ## <li>Modelowanie i Proces Trenowania Modelu</li>
 
-<p>Do przeprowadzenia automatycznej analizy modeli, została zastosowana biblioteka Autogluon. Pozwala ona na wybranie najlepszych modeli wraz z odpowiednio ustawionymi parametrami. Dodatkowymi plusami tego narzędzia AutoML są:
-  <ul>
-    <li>Eksport najelpszych rozwiązań do formatu .pkl (pickle).</li>
-    <li>Możliwość wykluczania konkretnych modeli (Przy założeniu, że są one nam niepotrzebne.).</li>
-    <li>Automatyczne przypisywanie hiperparametrów.</li>
-  </ul></p>
+Do automatycznej analizy modeli zastosowano bibliotekę **Autogluon**, która umożliwia:
 
-## <li>Instrukcja Obsługi Aplikacji</li>
-## <li>Podsumowanie</li>
+- Automatyczny wybór najlepszego modelu na podstawie wyników walidacji.
+- Eksport najlepszych modeli do formatu `.pkl` (pickle).
+- Wykluczanie niepotrzebnych modeli.
+- Automatyczne dostrajanie hiperparametrów.
 
-</ol>
+
+**Wybrany model:** LightGBMXT
+
+**Charakterystyka modelu LightGBMXT:**
+- Wysoka wydajność w uczeniu.
+- Obsługa braków danych.
+- Przetwarzanie równoległe (wydajność na dużych zbiorach danych).
+- Wsparcie dla wartości kategorycznych i liczbowych.
+  
+### Instrukcja Obsługi Aplikacji
+1. Wybierz interesującą markę samochodu z listy (np. Nissan).
+2. Wybierz model auta.
+3. Wybierz rodzaj skrzyni biegów i kolor.
+4. Wpisz przebieg auta.
+5. Wybierz rok produkcji za pomocą paska wyboru.
+6. Określ rodzaj paliwa. Jeśli samochód ma instalację LPG, zaznacz checkbox.
+7. Pojemność silnika wpisz w litrach (np. 1.6). Jeśli nie jesteś pewien, sprawdź w dowodzie rejestracyjnym.
+8. Wybierz typ auta (np. sedan, SUV).
+9. Zaznacz, czy pojazd posiada OC.
+10. Określ stan auta oraz rodzaj napędu.
+11. Zaznacz, jeśli sprzedający jest pierwszym właścicielem.
+12. Wybierz walutę, w której chcesz otrzymać predykcję, i kliknij "Oblicz cenę".
+    
+### Wynik:
+- Aplikacja poda oszacowaną cenę samochodu.
+- Jeśli przewidywana cena < 0, wyświetli komunikat, że auto nie nadaje się do sprzedaży.
+
+  ### Uruchamianie lokalne:
+Aby uruchomić aplikację lokalnie:
+1. Skopiuj kod źródłowy aplikacji.
+2. Zainstaluj wymagane biblioteki, wykonując poniższe polecenie w terminalu:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. W terminalu wpisz:
+
+   ```bash
+   streamlit run app.py
+   ```
+
+## Podsumowanie
+Aplikacja ma duży potencjał zastosowania w realnym świecie. Plany na przyszłość obejmują:
+
+- Obliczanie kosztów napraw i wymian części.
+- Analiza ryzyka wymiany rozrządu.
+- Szacowanie kosztów ubezpieczenia OC i AC.
+- Prognozowanie czasu potrzebnego na sprzedaż auta.
+- Dodanie przedziałów cenowych, podobnych do serwisu [Otomoto](https://www.otomoto.pl/osobowe/bmw).
+- Analiza popularności marek i modeli.
+
+Dalsze rozwijanie projektu może znacznie zwiększyć jego funkcjonalność i użyteczność.
