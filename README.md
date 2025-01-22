@@ -76,6 +76,8 @@ Przed trenowaniem modelu przeprowadzono czyszczenie danych:
    - `is_exchangeable` (nie wpływa na cenę pojazdu).
    - `location_region` (lokacja nie jest kluczowa dla predykcji ceny).
    - `feature_0` - `feature_9` (brak szczegółowych informacji).
+   - `number_of_photos` (nie wpływa na cenę pojazdu).
+
 
 2. **Przetwarzanie braków danych:**
    - Usunięto rekordy z dużą liczbą braków.
